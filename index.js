@@ -8,20 +8,19 @@ dotenv.config({
 });
 
 connectDB()
-  .then(
-    () => {
-      app.get("/", (req, res) => {
-        res.send("Backend Assignemnt");
-      });
-      app.listen(process.env.PORT || 4000, () => {
-        console.log(`App is listening at port ${process.env.PORT}`);
-      });
-    },
-    app.on("error", (err) => {
-      console.log("ERROR :", err);
-      throw err;
-    })
-  )
+  .then(() => {
+    app.get("/", (req, res) => {
+      res.send("Backend Assignemnt");
+    });
+    app.listen(process.env.PORT || 4000, () => {
+      console.log(`App is listening at port ${process.env.PORT}`);
+    });
+  })
   .catch((err) => {
     console.log("MongoDB connection failed !!!!!", err);
   });
+
+app.on("error", (err) => {
+  console.log("ERROR :", err);
+  throw err;
+});
