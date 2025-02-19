@@ -7,11 +7,12 @@ dotenv.config({
   path: "./.env",
 });
 
+app.get("/", (req, res) => {
+  res.send("Backend Assignemnt");
+});
+
 connectDB()
   .then(() => {
-    app.get("/", (req, res) => {
-      res.send("Backend Assignemnt");
-    });
     app.listen(process.env.PORT || 4000, () => {
       console.log(`App is listening at port ${process.env.PORT}`);
     });
