@@ -7,14 +7,18 @@ const searchProfile = async (req, res) => {
     if (!name) return res.status(400).json({ error: "Name is required" });
 
     const applications = await Application.find({});
-    const regex = new RegExp(name, "i");
+    const searchTerm = name.toLowerCase();
+
     const filteredApplications = applications
       .map((app) => ({
         ...app._doc,
         name: decrypt(app.name),
         email: decrypt(app.email),
       }))
-      .filter((app) => regex.test(app.name));
+      .filter((app) => {
+        const nameTokens = app.name.toLowerCase().split(" ");
+        return nameTokens.some((token) => token.includes(searchTerm));
+      });
 
     if (!filteredApplications.length) {
       return res.status(404).json({ error: "No matching resumes found" });
